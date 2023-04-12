@@ -20,24 +20,25 @@ export const productsFetch = createAsyncThunk(
     }
 )
 
+
 const productSlice = createSlice({
     name: "products",
     initialState,
     reducers: {},
-    extraReducers: {
-        [productsFetch.pending]: (state, action) => {
+    extraReducers: (builder) =>  {
+        builder.addCase(productsFetch.pending,(state, action) => {
             //immmer for mutable state
             state.status = "pending"
-        },
-        [productsFetch.fulfilled]: (state, action) => {
+        })
+        builder.addCase(productsFetch.fulfilled, (state, action) => {
             state.status = "success"
             state.items = action.payload
-        },
-        [productsFetch.rejected]: (state, action) => {
+        })
+        builder.addCase(productsFetch.rejected, (state, action) => {
             state.status = "rejected"
             state.error = action.payload
-        },
-    }
+        })
+    },
 })
 
 export default productSlice.reducer
